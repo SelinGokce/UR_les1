@@ -22,7 +22,9 @@ export default function GlobalNavbar() {
         <nav className="flex flex-col space-y-4">
           <a href="/home" className="hover:underline">Home</a>
           <a href="/about" className="hover:underline">About</a>
-          <a href="/project" className="hover:underline">Project</a>
+          <a href="/beatbliss" className="hover:underline">Project Beat Bliss</a>
+          <a href="/birdseye" className="hover:underline">Project Birds Eye</a>
+          <a href="/lantisapp" className="hover:underline">Project Redux Lantis</a>
           <a href="/contact" className="hover:underline">Contact</a>
           <a href="/login" className="hover:underline">Login</a>
 
