@@ -15,7 +15,7 @@ export function SidebarToggle({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="p-2 text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      className="p-2 text-slate-200 hover:text-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
     >
       <GiHamburgerMenu size={24} />
     </button>
@@ -42,15 +42,15 @@ export default function SidebarSlider({ isOpen, onClose, children }: SidebarSlid
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 p-4"
+            className="fixed top-0 left-0 h-full w-64 bg-slate-800 shadow-lg z-50 p-4"
           >
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">Menu</h2>
-              <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded">
+              <h2 className="text-xl font-semibold text-slate-100">Menu</h2>
+              <button onClick={onClose} className="p-2 hover:bg-slate-700 rounded text-slate-200">
                 <X size={24} />
               </button>
             </div>
-            <nav>{children}</nav>
+            <nav className="text-slate-200">{children}</nav>
           </motion.div>
         </>
       )}

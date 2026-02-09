@@ -11,7 +11,7 @@ export default function GlobalNavbar() {
     <>
       {/* Hamburger menu icon button */}
       <button
-        className="fixed top-4 left-4 z-50 p-2 text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded"
+        className="fixed top-4 left-4 z-50 p-2 text-slate-200 hover:text-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded"
         onClick={() => setIsSidebarOpen(true)}
       >
         <GiHamburgerMenu size={24} />
@@ -19,14 +19,14 @@ export default function GlobalNavbar() {
 
       {/* SidebarSlider component */}
       <SidebarSlider isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)}>
-        <nav className="flex flex-col space-y-4">
-          <a href="/home" className="hover:underline">Home</a>
-          <a href="/about" className="hover:underline">About</a>
-          <a href="/beatbliss" className="hover:underline">Project Beat Bliss</a>
-          <a href="/birdseye" className="hover:underline">Project Birds Eye</a>
-          <a href="/lantisapp" className="hover:underline">Project Redux Lantis</a>
-          <a href="/contact" className="hover:underline">Contact</a>
-          <a href="/login" className="hover:underline">Login</a>
+        <nav className="flex flex-col space-y-4 text-slate-200">
+          <a href="/home" className="hover:underline hover:text-slate-100">Home</a>
+          <a href="/about" className="hover:underline hover:text-slate-100">About</a>
+          <a href="/beatbliss" className="hover:underline hover:text-slate-100">Project Beat Bliss</a>
+          <a href="/birdseye" className="hover:underline hover:text-slate-100">Project Birds Eye</a>
+          <a href="/lantisapp" className="hover:underline hover:text-slate-100">Project Redux Lantis</a>
+          <a href="/contact" className="hover:underline hover:text-slate-100">Contact</a>
+          <a href="/login" className="hover:underline hover:text-slate-100">Login</a>
 
         </nav>
       </SidebarSlider>
