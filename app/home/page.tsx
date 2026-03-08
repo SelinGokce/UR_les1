@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import LatestArticles from "../../components/LatestArticles"
 
 const words = ["Design", "HTML", "CSS", "JS", "3D"]
 
@@ -35,6 +36,8 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* list of projects/articles */}
+      <LatestArticles />
     </div>
   )
 }

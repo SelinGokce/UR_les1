@@ -27,6 +27,13 @@ export default function GlobalNavbar() {
           <a href="/lantisapp" className="hover:underline hover:text-slate-100">Project Redux Lantis</a>
           <a href="/contact" className="hover:underline hover:text-slate-100">Contact</a>
           <a href="/login" className="hover:underline hover:text-slate-100">Login</a>
+          <a href="/admin">
+            <button className="bg-blue-300 hover:bg-white hover:text-black text-white font-semibold py-2 px-4 rounded transition-colors duration-200 w-full text-left">
+              Admin
+            </button>
+          </a>
+          <a href="/adminuser" className="hover:underline hover:text-slate-100">Admin user</a>
+
 
         </nav>
       </SidebarSlider>
