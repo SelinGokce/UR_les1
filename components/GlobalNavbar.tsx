@@ -1,42 +1,56 @@
 "use client"
 
-import { useState } from "react"
-import SidebarSlider from "@/components/SidebarSlider"
-import { GiHamburgerMenu } from "react-icons/gi"
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 export default function GlobalNavbar() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const pathname = usePathname()
+
+  // Define navigation links for easier management
+  const navLinks = [
+    { name: 'Home', href: '/home' },
+    { name: 'About', href: '/about' },
+    { name: 'Project Beat Bliss', href: '/beatbliss' },
+    { name: 'Project Birds Eye', href: '/birdseye' },
+    { name: 'Project Redux Lantis', href: '/lantisapp' },
+  ]
 
   return (
-    <>
-      {/* Hamburger menu icon button */}
-      <button
-        className="fixed top-4 left-4 z-50 p-2 text-slate-200 hover:text-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded"
-        onClick={() => setIsSidebarOpen(true)}
-      >
-        <GiHamburgerMenu size={24} />
-      </button>
+    <nav className="fixed top-6 left-10 z-50 flex items-center gap-6">
+      {/* Logo */}
+      <div className="flex-shrink-0">
+        <Image
+          src="/logoblue.svg"
+          alt="Selin Logo"
+          width={45}
+          height={45}
+          className="rounded-full shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+        />
+      </div>
 
-      {/* SidebarSlider component */}
-      <SidebarSlider isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)}>
-        <nav className="flex flex-col space-y-4 text-slate-200">
-          <a href="/home" className="hover:underline hover:text-slate-100">Home</a>
-          <a href="/about" className="hover:underline hover:text-slate-100">About</a>
-          <a href="/beatbliss" className="hover:underline hover:text-slate-100">Project Beat Bliss</a>
-          <a href="/birdseye" className="hover:underline hover:text-slate-100">Project Birds Eye</a>
-          <a href="/lantisapp" className="hover:underline hover:text-slate-100">Project Redux Lantis</a>
-          <a href="/contact" className="hover:underline hover:text-slate-100">Contact</a>
-          <a href="/login" className="hover:underline hover:text-slate-100">Login</a>
-          <a href="/admin">
-            <button className="bg-blue-300 hover:bg-white hover:text-black text-white font-semibold py-2 px-4 rounded transition-colors duration-200 w-full text-left">
-              Admin
-            </button>
-          </a>
-          <a href="/adminuser" className="hover:underline hover:text-slate-100">Admin user</a>
+      {/* Navigation Links */}
+      <div className="flex flex-row gap-3 text-slate-200">
+        {navLinks.map((link) => {
+          const isActive = pathname === link.href
 
-
-        </nav>
-      </SidebarSlider>
-    </>
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`
+                                px-4 py-2 rounded-[16px] border transition-all duration-300 backdrop-blur-sm
+                                ${isActive
+                  ? "bg-white text-[#354982] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                  : "bg-[#354982]/80 border-white/50 hover:bg-[#4a5f9e] hover:border-white"
+                }
+                            `}
+            >
+              {link.name}
+            </Link>
+          )
+        })}
+      </div>
+    </nav>
   )
 }

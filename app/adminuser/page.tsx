@@ -73,7 +73,7 @@ export default function UserLandingPage() {
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type } = e.target as HTMLInputElement
+        const { name, value } = e.target as HTMLInputElement
         // handle simple inputs
         setUserData(prev => ({ ...prev, [name]: value }))
         // Clear error for this field when user starts typing
@@ -139,7 +139,7 @@ export default function UserLandingPage() {
             <h1 className="text-3xl font-bold mb-6 text-slate-100">User Profile</h1>
             <div className="flex flex-col gap-6">
                 {/* User Information Display */}
-                <div className="bg-slate-800 p-6 rounded-lg">
+                <div className="bg-white/40 p-6 rounded-lg">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-xl font-bold text-slate-100">Profile Information</h2>
                         <button

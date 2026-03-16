@@ -118,10 +118,55 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
   body {
     @apply bg-background text-foreground;
+    background: linear-gradient(to bottom right, #000752, #15B6DF);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+}
+  /* White wave overlays */
+/* White wave overlays using your custom design SVGs */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  /* Use 'cover' to ensure the wave stretches across the screen width */
+  background-size: cover; 
+  width: 130%; 
+  left: -15%;
+}
+
+/* The larger, back wave */
+body::before {
+  background-image: url('/bigwave.svg');
+  /* Lower opacity for the background layer to create depth */
+  opacity: 1; 
+  height: 65vh;
+  bottom: 0;
+  animation: waveFloat 10s ease-in-out infinite;
+}
+
+/* The smaller, front wave */
+body::after {
+  background-image: url('/smallwave.svg');
+  /* Higher opacity for the foreground layer */
+  opacity: 1; 
+  height: 55vh;
+  bottom: -5%;
+  animation: waveFloat 8s ease-in-out infinite reverse;
+  animation-delay: 2s;
+}
+
+/* Smoother animation that moves both vertically and slightly horizontally */
+@keyframes waveFloat {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-25px) translateX(20px);
   }
 }

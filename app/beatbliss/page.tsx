@@ -62,7 +62,7 @@ export default function ProjectPage() {
         <h1 className="text-3xl font-bold text-slate-100">{formData.title}</h1>
         <div className="group relative">
           <a href="https://forms.gle/survey" target="_blank" rel="noopener noreferrer">
-            <button className="bg-blue-300 hover:bg-white hover:text-black text-white font-semibold py-2 px-4 rounded transition-colors duration-200">
+            <button className="bg-blue-300 hover:bg-white hover:text-black text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
               Take Survey
             </button>
           </a>
@@ -72,12 +72,12 @@ export default function ProjectPage() {
         </div>
       </div>
       <div className="flex flex-col gap-6">
-        <div className="bg-slate-800 p-6 rounded-lg">
+        <div className="bg-white/40 p-6 rounded-lg">
           <p className="text-slate-200">
             {formData.description}
           </p>
         </div>
-        <div className="bg-slate-800 p-6 rounded-lg">
+        <div className="bg-white/40 p-6 rounded-lg">
           <h1 className="text-xl font-bold mb-6 text-slate-100">Gebruikte Tools</h1>
           <ul className="list-disc pl-5 text-slate-200 space-y-2">
             {formData.tools.split(',').map((tool, index) => (
@@ -85,10 +85,10 @@ export default function ProjectPage() {
             ))}
           </ul>
         </div>
-        <div className="bg-slate-800 p-6 rounded-lg">
+        <div className="bg-white/40 p-6 rounded-lg">
           <div className="flex flex-row gap-4">
             <div className="flex-1">
-              <a href="/beatbliss/mockupbeatbliss.png" target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:scale-110 transition-transform inline-block">
+              <a href="/beatbliss/mockupbeatblisxs.png" target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:scale-110 transition-transform inline-block">
                 <Image
                   src="/beatbliss/mockupbeatbliss.png"
                   alt="Beat Bliss album mockup"
@@ -124,7 +124,7 @@ export default function ProjectPage() {
         </div>
 
         {/* Edit Form */}
-        <div className="bg-slate-800 p-6 rounded-lg">
+        <div className="bg-white/40 p-6 rounded-lg">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold text-slate-100">Edit Project</h2>
             <button
