@@ -30,7 +30,7 @@ export default function LatestArticles() {
     return (
         <div className="flex gap-12 items-start max-w-6xl mx-auto">
             {/* Left Side: Category Icon and Label */}
-            <div className="flex flex-col items-center gap-3 mt-10">
+            <div className="flex flex-col items-center gap-2 mt-10">
                 <div>
                     <Image
                         src="/newspaper-fill.svg"
@@ -39,7 +39,7 @@ export default function LatestArticles() {
                         height={100}
                     />
                 </div>
-                <span className="text-white text-2xl font-bold tracking-tight">News</span>
+                <span className="text-white text-2xl font-medium tracking-tight">News</span>
             </div>
 
             {/* Right Side: Articles List */}

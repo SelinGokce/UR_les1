@@ -8,7 +8,7 @@ import "./globals.css"
 
 export const metadata = {
   title: "Selindot",
-  description: "portfolio website of selin",
+  description: "portfolio website van selin",
 }
 
 export default function RootLayout({
