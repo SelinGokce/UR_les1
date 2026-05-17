@@ -1,13 +1,35 @@
+"use client" // <-- CRITICAL: This must be the absolute first line of the file!
+
 import { AppToaster } from "@/components/ui/toast"
 import GlobalNavbar from "@/components/GlobalNavbar"
 import Footer from "@/components/Footer"
 import Script from "next/script"
 import GoogleAnalyticsTracker from "@/components/GoogleAnalyticsTracker"
 import "@/app/globals.css"
+import { MockAuthProvider, useAuth } from "@/components/context/MockAuthContext"
+import AuthSimPanel from "@/components/ui/AuthSimPanel"
 
-export const metadata = {
-  title: "Selindot",
-  description: "portfolio website van selin",
+// This sub-component can now safely read useAuth() on the client side!
+function LayoutThemeContent({ children }: { children: React.ReactNode }) {
+  const { currentRole } = useAuth()
+
+  return (
+    <body
+      className={`text-slate-100 font-mono min-h-screen flex flex-col ${currentRole === 'admin' ? 'is-admin' : ''
+        }`}
+    >
+      <GoogleAnalyticsTracker />
+      <GlobalNavbar />
+
+      <main className="flex-grow p-20 mx-auto mt-10 w-full max-w-7xl">
+        {children}
+      </main>
+
+      <Footer />
+      <AppToaster />
+      <AuthSimPanel />
+    </body>
+  )
 }
 
 export default function RootLayout({
@@ -32,28 +54,11 @@ export default function RootLayout({
         </Script>
       </head>
 
-      <body
-        style={{
-          background: 'linear-gradient(to bottom right, #000752, #15B6DF)',
-          backgroundAttachment: 'fixed'
-        }}
-        className="text-slate-100 font-mono min-h-screen flex flex-col"
-      >
-        <GoogleAnalyticsTracker />
-
-        {/* The Navbar stays fixed at the top */}
-        <GlobalNavbar />
-
-        {/* Main content wrapper - flex-grow pushes everything below it (the footer) down */}
-        <main className="flex-grow p-20 mx-auto mt-10 w-full max-w-7xl">
+      <MockAuthProvider>
+        <LayoutThemeContent>
           {children}
-        </main>
-
-        {/* Footer is now part of the natural page flow, pushed to the bottom by flex-grow */}
-        <Footer />
-
-        <AppToaster />
-      </body>
+        </LayoutThemeContent>
+      </MockAuthProvider>
     </html>
   )
 }

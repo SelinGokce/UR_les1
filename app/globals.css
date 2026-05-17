@@ -123,8 +123,27 @@
     background: linear-gradient(to bottom right, #000752, #15B6DF);
     background-attachment: fixed;
     min-height: 100vh;
+    /* Smooth 0.8s color morph transition */
+    transition: background 0.8s ease; 
+  }
+
+  /* NEW: The pink command center gradient overrides the base gradient instantly when the class is added */
+  body.is-admin {
+    background: linear-gradient(to bottom right, #52002b, #df1587);
+    background-attachment: fixed;
+  }
+  /* NEW: Smooth color-morph transitions for your custom navigation pill buttons */
+  .nav-pill {
+    transition: background-color 0.8s ease, border-color 0.8s ease, color 0.8s ease;
+  }
+
+  /* Admin Hover configuration states for unselected tabs */
+  .nav-pill.is-admin:not(.bg-white):hover {
+    background-color: #7a0341;
+    border-color: #ffffff;
   }
 }
+
   /* White wave overlays */
 /* White wave overlays using your custom design SVGs */
 body::before,

@@ -3,17 +3,28 @@
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import Clock from "./Clock" // Import your new component
+import Clock from "./Clock"
+import { useAuth } from "@/components/context/MockAuthContext"
 
 export default function GlobalNavbar() {
   const pathname = usePathname()
+  const { currentRole } = useAuth()
 
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
-    { name: 'Projects', href: '/projects' }, // Points to this dashboard page
-
+    { name: 'Projects', href: '/projects' },
   ]
+
+  if (currentRole === 'admin') {
+    navLinks.push(
+      { name: 'Configuration core', href: '/admin-configuration' },
+      { name: 'Profile Registry', href: '/admin-profile-registry' }
+    )
+  }
+
+  // Check if we need to apply the admin styling classes
+  const isAdminMode = currentRole === 'admin'
 
   return (
     <nav className="fixed top-6 left-10 right-10 z-50 flex items-center justify-between">
@@ -35,10 +46,17 @@ export default function GlobalNavbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-[16px] border transition-all duration-300 backdrop-blur-sm ${isActive
-                  ? "bg-white text-[#354982] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
-                  : "bg-[#354982]/80 border-white/50 hover:bg-[#4a5f9e] hover:border-white"
-                  }`}
+                /* 1. Added a 'nav-pill' identity class 
+                  2. Conditionally appended 'is-admin' to handle the color shifting transitions
+                */
+                className={`nav-pill px-4 py-2 rounded-[16px] border transition-all duration-300 backdrop-blur-sm ${isActive
+                  ? isAdminMode
+                    ? "bg-white text-[#52002b] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                    : "bg-white text-[#354982] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                  : isAdminMode
+                    ? "bg-[#52002b]/80 border-white/30 text-slate-200"
+                    : "bg-[#354982]/80 border-white/50 text-slate-200"
+                  } ${isAdminMode ? 'is-admin' : ''}`}
               >
                 {link.name}
               </Link>
@@ -47,7 +65,6 @@ export default function GlobalNavbar() {
         </div>
       </div>
 
-      {/* The separate Clock component */}
       <Clock />
     </nav>
   )
