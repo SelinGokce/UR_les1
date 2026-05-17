@@ -5,18 +5,20 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="w-full h-10 bg-slate-800 text-center py-4 text-sm text-slate-200 opacity-5 hover:opacity-100 transition-opacity duration-300">
-      <div className="mb-2">
-        &copy; {currentYear} Selin Gokce. All rights reserved.
+    /* Removed bg-slate-800 and changed text to pure white. 
+       Removed fixed height and opacity constraints for a cleaner look. */
+    <footer className="w-full py-10 text-center text-sm text-white mt-auto">
+      <div className="mb-4 opacity-60">
+        &copy; {currentYear} <span className="font-bold">Selin Gokce</span>. All rights reserved.
       </div>
-      <div className="flex justify-center space-x-4">
-        <Link href="/terms-of-agreement" className="underline hover:text-slate-100">
+      <div className="flex justify-center space-x-6 text-white/80">
+        <Link href="/terms-of-agreement" className="hover:text-white hover:underline transition-colors">
           Terms of Agreement
         </Link>
-        <Link href="/copyright-regulations" className="underline hover:text-slate-100">
+        <Link href="/copyright-regulations" className="hover:text-white hover:underline transition-colors">
           Copyright Regulations
         </Link>
-        <Link href="/cookie-settings" className="underline hover:text-slate-100">
+        <Link href="/cookie-settings" className="hover:text-white hover:underline transition-colors">
           Cookie Settings
         </Link>
       </div>

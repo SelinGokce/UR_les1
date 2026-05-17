@@ -3,8 +3,7 @@ import GlobalNavbar from "@/components/GlobalNavbar"
 import Footer from "@/components/Footer"
 import Script from "next/script"
 import GoogleAnalyticsTracker from "@/components/GoogleAnalyticsTracker"
-
-import "./globals.css"
+import "@/app/globals.css"
 
 export const metadata = {
   title: "Selindot",
@@ -33,18 +32,25 @@ export default function RootLayout({
         </Script>
       </head>
 
-      <body style={{ background: 'linear-gradient(to bottom right, #000752, #15B6DF)', backgroundAttachment: 'fixed' }} className="text-slate-100 font-mono">
-
+      <body
+        style={{
+          background: 'linear-gradient(to bottom right, #000752, #15B6DF)',
+          backgroundAttachment: 'fixed'
+        }}
+        className="text-slate-100 font-mono min-h-screen flex flex-col"
+      >
         <GoogleAnalyticsTracker />
 
-        <div className="p-20 mx-auto mt-10">
-          <GlobalNavbar />
-          {children}
-        </div>
+        {/* The Navbar stays fixed at the top */}
+        <GlobalNavbar />
 
-        <div className="fixed bottom-0 left-0 right-0">
-          <Footer />
-        </div>
+        {/* Main content wrapper - flex-grow pushes everything below it (the footer) down */}
+        <main className="flex-grow p-20 mx-auto mt-10 w-full max-w-7xl">
+          {children}
+        </main>
+
+        {/* Footer is now part of the natural page flow, pushed to the bottom by flex-grow */}
+        <Footer />
 
         <AppToaster />
       </body>

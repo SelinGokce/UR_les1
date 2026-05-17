@@ -9,11 +9,10 @@ export default function GlobalNavbar() {
   const pathname = usePathname()
 
   const navLinks = [
-    { name: 'Home', href: '/home' },
+    { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
-    { name: 'Project Beat Bliss', href: '/beatbliss' },
-    { name: 'Project Birds Eye', href: '/birdseye' },
-    { name: 'Project Redux Lantis', href: '/lantisapp' },
+    { name: 'Projects', href: '/projects' }, // Points to this dashboard page
+
   ]
 
   return (
@@ -37,8 +36,8 @@ export default function GlobalNavbar() {
                 key={link.href}
                 href={link.href}
                 className={`px-4 py-2 rounded-[16px] border transition-all duration-300 backdrop-blur-sm ${isActive
-                    ? "bg-white text-[#354982] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
-                    : "bg-[#354982]/80 border-white/50 hover:bg-[#4a5f9e] hover:border-white"
+                  ? "bg-white text-[#354982] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                  : "bg-[#354982]/80 border-white/50 hover:bg-[#4a5f9e] hover:border-white"
                   }`}
               >
                 {link.name}

@@ -20,9 +20,9 @@ const projects: ProjectLink[] = [
         description: 'An app for nature diaries and photography with fauna/flora search.',
     },
     {
-        title: 'Redux Lantis',
-        href: '/lantisapp',
-        description: 'A location-based game demonstrating the importance of infrastructure.',
+        title: 'Concequences',
+        href: '/cqcexperience',
+        description: 'A thinkpiece installation.',
     },
 ]
 

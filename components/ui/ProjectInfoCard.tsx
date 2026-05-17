@@ -10,11 +10,11 @@ export default function ProjectInfoCard({ title, description, tools }: Props) {
             style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 100%)' }}
             className="border border-white/20 rounded-[2rem] overflow-hidden p-10 backdrop-blur-sm shadow-xl mb-12"
         >
-            <h1 className="text-4xl font-bold text-white mb-6">{title}</h1>
+            <h1 className="text-2xl font-bold text-white mb-6">{title}</h1>
             <div className="space-y-8">
                 <div>
                     <h3 className="text-sm uppercase tracking-widest text-white/60 font-bold mb-2">Description</h3>
-                    <p className="text-xl text-white leading-relaxed font-light">{description}</p>
+                    <p className="text-l text-white leading-relaxed font-light">{description}</p>
                 </div>
                 <div>
                     <h3 className="text-sm uppercase tracking-widest text-white/60 font-bold mb-2">Tools Used</h3>

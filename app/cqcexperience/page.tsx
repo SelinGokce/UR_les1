@@ -11,25 +11,26 @@ export default function ProjectPage() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
   const projectData = {
-    title: 'Birds-Eye',
-    description: 'Birds-Eye is a nature journaling and photography application designed to help outdoor enthusiasts log their wildlife discoveries while guiding them to find diverse fauna and flora flourishing right in their local surroundings.',
-    tools: 'UI Design, Mockups, Prototyping',
+    title: 'Consequences',
+    description: 'Consequences is an immersive live experience and physical thinkpiece designed to let users express and release deep inner emotions. Participants follow a structured sequence to intentionally shatter a physical plate inside a custom-engineered hexagonal mirror chamber, visualizing the sudden and raw impact of emotional release.',
+    tools: 'Interactive Design, Experiential Installation, Hardware Prototyping, Spatial Layout, Team Collaboration',
     images: [
-      { src: '/birdseye/mockupbirdseye.png', alt: 'Birds-Eye application user interface and mobile mockups' }
+      { src: '/cqc/20250526_144731.jpg', alt: 'Physical interface setup with step-by-step instruction tokens' },
+      { src: '/cqc/20250526_141329.jpg', alt: 'Hexagonal infinite reflection mirror chamber installation with ambient floor LED paths' },
     ]
   }
 
   return (
     <div className="relative min-h-screen">
-      {/* Outer wrapper for global layout and fade-in entry animation */}
+      {/* Outer wrapper applies the global layout and fade-in animation */}
       <div className="flex gap-12 items-start max-w-6xl mx-auto pt-10 pb-20 fade-in-up">
 
-        {/* Left Side: Sidebar Icon */}
+        {/* Left Side: Sidebar Icon Container */}
         <div className="flex flex-col items-center gap-3 mt-10">
           <div className="p-5 rounded-2xl">
             <Image
               src="/disk.svg"
-              alt="Project Icon"
+              alt="Installation Design Icon"
               width={55}
               height={55}
             />
@@ -37,7 +38,7 @@ export default function ProjectPage() {
           <span className="text-white text-2xl font-bold tracking-tight">Project</span>
         </div>
 
-        {/* Right Side: Clean structural content mapping */}
+        {/* Right Side: Render our structural components */}
         <div className="flex-1 space-y-12">
 
           {/* 1. Details Section */}
