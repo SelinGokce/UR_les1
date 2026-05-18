@@ -15,8 +15,8 @@ export default function ProjectPage() {
     description: 'Consequences is an immersive live experience and physical thinkpiece designed to let users express and release deep inner emotions. Participants follow a structured sequence to intentionally shatter a physical plate inside a custom-engineered hexagonal mirror chamber, visualizing the sudden and raw impact of emotional release.',
     tools: 'Interactive Design, Experiential Installation, Hardware Prototyping, Spatial Layout, Team Collaboration',
     images: [
-      { src: '/cqc/20250526_144731.jpg', alt: 'Physical interface setup with step-by-step instruction tokens' },
-      { src: '/cqc/20250526_141329.jpg', alt: 'Hexagonal infinite reflection mirror chamber installation with ambient floor LED paths' },
+      { src: '/consequences/20250526_144731.jpg', alt: 'Physical interface setup with step-by-step instruction tokens' },
+      { src: '/consequences/20250526_141329.jpg', alt: 'Hexagonal infinite reflection mirror chamber installation with ambient floor LED paths' },
     ]
   }
 
