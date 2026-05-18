@@ -2,7 +2,7 @@ import HomeClient from "./HomeClient"
 
 export const metadata = {
   title: "Selindot",
-  description: "portfolio website van selin",
+  description: "Selin's personal portfolio and playground for UI/UX design, blending retro aesthetics with modern web technologies.",
 }
 
 export default function HomePage() {

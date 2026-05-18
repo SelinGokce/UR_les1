@@ -29,8 +29,8 @@ export default function LatestArticles() {
             description: 'An app for nature diaries and photography with fauna/flora search.',
         },
         {
-            title: 'Concequences',
-            href: '/cqcexperience',
+            title: 'Consequences',
+            href: '/consequences',
             description: 'A thinkpiece installation.',
         },
     ])
