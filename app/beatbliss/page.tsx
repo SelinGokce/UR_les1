@@ -23,20 +23,26 @@ export default function ProjectPage() {
 
   return (
     <div className="relative min-h-screen">
-      {/* 1. Added "fade-in-up" to the outer wrapper */}
-      <div className="flex gap-12 items-start max-w-6xl mx-auto pt-10 pb-20 fade-in-up">
+      <div className="flex flex-col md:flex-row gap-6 md:gap-12 items-start max-w-6xl mx-auto pt-4 sm:pt-10 pb-12 sm:pb-20 px-3 sm:px-4 fade-in-up">
 
-        {/* Left Side: Sidebar Icon */}
-        <div className="flex flex-col items-center gap-3 mt-10">
-          <div className="p-5 rounded-2xl">
-            <Image src="/disk.svg" alt="Disk" width={55} height={55} />
+        {/* Left Side: Sidebar Icon & Label (Aligned Left) */}
+        <div className="flex flex-row md:flex-col items-center md:items-start gap-3 mt-2 md:mt-10 self-start">
+          <div className="p-2 sm:p-5 rounded-2xl">
+            <Image
+              src="/disk.svg"
+              alt="Disk"
+              width={55}
+              height={55}
+              className="w-10 h-10 sm:w-[55px] sm:h-[55px] object-contain"
+            />
           </div>
-          <span className="text-white text-2xl font-bold tracking-tight">Project</span>
+          <span className="text-white text-xl sm:text-2xl font-bold tracking-tight text-left">Project</span>
         </div>
 
-        <div className="flex-1 space-y-12">
+        {/* Right Side: Main Content */}
+        <div className="w-full flex-1 space-y-8 sm:space-y-12">
 
-          {/* 2. Added opacity-0 and 200ms delay to the details card */}
+          {/* Project Details */}
           <section className="opacity-0 [animation-delay:200ms] animate-[fadeInUp_0.8s_ease-out_forwards]">
             <ProjectHeader title="Project Details" />
             <ProjectInfoCard
@@ -46,7 +52,7 @@ export default function ProjectPage() {
             />
           </section>
 
-          {/* 3. Added opacity-0 and 400ms delay to the image gallery */}
+          {/* Image Gallery */}
           <section className="opacity-0 [animation-delay:400ms] animate-[fadeInUp_0.8s_ease-out_forwards]">
             <ProjectHeader title="Visuals" />
             <ImageGallery

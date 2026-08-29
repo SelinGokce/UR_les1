@@ -105,7 +105,7 @@ export default function UserLandingPage() {
             username: newUsername.trim().toLowerCase(),
             firstname: newFirstName.trim(),
             lastname: newLastName.trim(),
-            role: activeTab, // Automatically assigns to the active tab view
+            role: activeTab,
             socialmedia: [{ platform: 'github', account: newUsername.trim() }],
             gdprConsent: false,
             newsletter: { subscribed: false, email: '' }
@@ -199,174 +199,188 @@ export default function UserLandingPage() {
                 </button>
             </div>
 
-            {/* Filtered Users Selection Chips */}
-            {filteredUsers.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-6">
-                    {filteredUsers.map((u) => (
-                        <button
-                            key={u.id}
-                            onClick={() => { setSelectedUserId(u.id); setIsEditing(false); }}
-                            className={`px-4 py-1.5 rounded-full border text-xs font-mono transition-all ${activeUser && u.id === activeUser.id
-                                    ? 'bg-white text-[#000752] border-white font-bold shadow-md'
-                                    : 'bg-white/5 text-white/60 border-white/10 hover:bg-white/10'
-                                }`}
-                        >
-                            @{u.username}
-                        </button>
-                    ))}
-                </div>
-            )}
+            {/* STACKED VERTICAL USER LIST PER MODE */}
+            {filteredUsers.length > 0 ? (
+                <div className="space-y-4">
+                    {filteredUsers.map((userItem) => {
+                        const isSelected = activeUser && userItem.id === activeUser.id
 
-            {/* MAIN CONTENT CONTAINER */}
-            {activeUser ? (
-                <div className="flex flex-col gap-6">
-                    <div
-                        style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 100%)' }}
-                        className="border border-white/20 rounded-[2rem] p-8 backdrop-blur-sm shadow-xl"
-                    >
-                        <div className="flex flex-wrap justify-between items-center gap-4 mb-8">
-                            <div>
-                                <h2 className="text-2xl font-bold text-white tracking-tight">
-                                    Meta ID: <span className="text-white/60 font-mono font-light text-xl">#{activeUser.username}</span>
-                                </h2>
-                                <span className="text-xs font-mono text-white/40">Current Access Privilege: <strong className="text-white uppercase">{activeUser.role}</strong></span>
-                            </div>
-
-                            {/* User Action Controls */}
-                            <div className="flex flex-wrap items-center gap-2">
-                                <button
-                                    type="button"
-                                    onClick={() => toggleUserRole(activeUser.id)}
-                                    className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-mono font-bold py-2 px-4 rounded-full transition-all text-xs"
+                        return (
+                            <div
+                                key={userItem.id}
+                                style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 100%)' }}
+                                className={`border rounded-[2rem] p-6 backdrop-blur-sm shadow-xl transition-all ${isSelected ? 'border-white bg-white/10' : 'border-white/20 opacity-80 hover:opacity-100'
+                                    }`}
+                            >
+                                <div
+                                    className="flex flex-wrap justify-between items-center gap-4 cursor-pointer"
+                                    onClick={() => {
+                                        if (selectedUserId !== userItem.id) {
+                                            setSelectedUserId(userItem.id)
+                                            setIsEditing(false)
+                                        }
+                                    }}
                                 >
-                                    🔄 Move to {activeUser.role === 'admin' ? 'Users' : 'Admins'}
-                                </button>
-
-                                <button
-                                    type="button"
-                                    onClick={() => handleDeleteUser(activeUser.id)}
-                                    className="bg-red-500/20 hover:bg-red-500 text-red-200 hover:text-white border border-red-500/30 font-mono font-bold py-2 px-4 rounded-full transition-all text-xs"
-                                >
-                                    🗑️ Remove
-                                </button>
-
-                                <button
-                                    onClick={() => { setIsEditing(!isEditing); setErrors({}); }}
-                                    className="bg-white/10 hover:bg-white hover:text-[#000752] text-white border border-white/20 font-bold py-2 px-5 rounded-full transition-all duration-300 text-xs uppercase tracking-wider backdrop-blur-sm"
-                                >
-                                    {isEditing ? 'Cancel' : '✏️ Modify'}
-                                </button>
-                            </div>
-                        </div>
-
-                        {isEditing ? (
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div className="flex flex-col md:flex-row gap-8 items-start">
-                                    <div className="flex-1 w-full space-y-5">
-                                        <div>
-                                            <label className="block text-xs uppercase tracking-widest text-white/60 font-bold mb-2 ml-1">Username Reference</label>
-                                            <input
-                                                type="text"
-                                                value={activeUser.username}
-                                                onChange={(e) => updateActiveUser(prev => ({ ...prev, username: e.target.value }))}
-                                                className={`w-full bg-black/20 border text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-white/40 ${errors.username ? 'border-red-500/50' : 'border-white/10'}`}
-                                            />
-                                            {errors.username && <p className="text-red-400 text-xs mt-1 ml-1">⚠️ {errors.username}</p>}
-                                        </div>
-
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <div>
-                                                <label className="block text-xs uppercase tracking-widest text-white/60 font-bold mb-2 ml-1">First Name</label>
-                                                <input
-                                                    type="text"
-                                                    value={activeUser.firstname}
-                                                    onChange={(e) => updateActiveUser(prev => ({ ...prev, firstname: e.target.value }))}
-                                                    className="w-full bg-black/20 border border-white/10 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none"
-                                                />
-                                            </div>
-
-                                            <div>
-                                                <label className="block text-xs uppercase tracking-widest text-white/60 font-bold mb-2 ml-1">Last Name</label>
-                                                <input
-                                                    type="text"
-                                                    value={activeUser.lastname}
-                                                    onChange={(e) => updateActiveUser(prev => ({ ...prev, lastname: e.target.value }))}
-                                                    className="w-full bg-black/20 border border-white/10 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none"
-                                                />
-                                            </div>
-                                        </div>
+                                    <div>
+                                        <h3 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+                                            {userItem.firstname} {userItem.lastname}
+                                            <span className="text-sm font-mono font-normal text-white/60">(@{userItem.username})</span>
+                                        </h3>
+                                        <span className="text-xs font-mono text-white/40">Role: <strong className="text-white uppercase">{userItem.role}</strong></span>
                                     </div>
 
-                                    {/* Right Side Role & Checks Column */}
-                                    <div className="w-full md:w-80 space-y-4">
-                                        <div style={{ background: 'rgba(0, 7, 82, 0.3)' }} className="border border-white/10 p-5 rounded-2xl space-y-4">
-                                            <div>
-                                                <label className="block text-xs uppercase tracking-widest text-white/60 font-bold mb-2 ml-1">Assigned Role Category</label>
-                                                <select
-                                                    value={activeUser.role}
-                                                    onChange={(e) => updateActiveUser(prev => ({ ...prev, role: e.target.value as 'user' | 'admin' }))}
-                                                    className="w-full bg-black/40 border border-white/10 text-white rounded-xl px-3 py-2 text-xs font-mono focus:outline-none"
+                                    {/* Action buttons inside each individual user card */}
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                toggleUserRole(userItem.id)
+                                            }}
+                                            className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-mono font-bold py-1.5 px-3 rounded-full transition-all text-xs"
+                                        >
+                                            🔄 Move to {userItem.role === 'admin' ? 'Users' : 'Admins'}
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                handleDeleteUser(userItem.id)
+                                            }}
+                                            className="bg-red-500/20 hover:bg-red-500 text-red-200 hover:text-white border border-red-500/30 font-mono font-bold py-1.5 px-3 rounded-full transition-all text-xs"
+                                        >
+                                            🗑️ Remove
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                setSelectedUserId(userItem.id)
+                                                setIsEditing(isSelected ? !isEditing : true)
+                                                setErrors({})
+                                            }}
+                                            className="bg-white/10 hover:bg-white hover:text-[#000752] text-white border border-white/20 font-bold py-1.5 px-4 rounded-full transition-all duration-300 text-xs uppercase tracking-wider backdrop-blur-sm"
+                                        >
+                                            {isSelected && isEditing ? 'Cancel' : '✏️ Modify'}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* EDIT OR VIEW SECTION EXPANDED PER USER CARD */}
+                                {isSelected && (
+                                    <div className="mt-6 pt-6 border-t border-white/10">
+                                        {isEditing ? (
+                                            <form onSubmit={handleSubmit} className="space-y-6">
+                                                <div className="flex flex-col md:flex-row gap-8 items-start">
+                                                    <div className="flex-1 w-full space-y-5">
+                                                        <div>
+                                                            <label className="block text-xs uppercase tracking-widest text-white/60 font-bold mb-2 ml-1">Username Reference</label>
+                                                            <input
+                                                                type="text"
+                                                                value={activeUser.username}
+                                                                onChange={(e) => updateActiveUser(prev => ({ ...prev, username: e.target.value }))}
+                                                                className={`w-full bg-black/20 border text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-white/40 ${errors.username ? 'border-red-500/50' : 'border-white/10'}`}
+                                                            />
+                                                            {errors.username && <p className="text-red-400 text-xs mt-1 ml-1">⚠️ {errors.username}</p>}
+                                                        </div>
+
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                            <div>
+                                                                <label className="block text-xs uppercase tracking-widest text-white/60 font-bold mb-2 ml-1">First Name</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={activeUser.firstname}
+                                                                    onChange={(e) => updateActiveUser(prev => ({ ...prev, firstname: e.target.value }))}
+                                                                    className="w-full bg-black/20 border border-white/10 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none"
+                                                                />
+                                                            </div>
+
+                                                            <div>
+                                                                <label className="block text-xs uppercase tracking-widest text-white/60 font-bold mb-2 ml-1">Last Name</label>
+                                                                <input
+                                                                    type="text"
+                                                                    value={activeUser.lastname}
+                                                                    onChange={(e) => updateActiveUser(prev => ({ ...prev, lastname: e.target.value }))}
+                                                                    className="w-full bg-black/20 border border-white/10 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="w-full md:w-80 space-y-4">
+                                                        <div style={{ background: 'rgba(0, 7, 82, 0.3)' }} className="border border-white/10 p-5 rounded-2xl space-y-4">
+                                                            <div>
+                                                                <label className="block text-xs uppercase tracking-widest text-white/60 font-bold mb-2 ml-1">Assigned Role Category</label>
+                                                                <select
+                                                                    value={activeUser.role}
+                                                                    onChange={(e) => updateActiveUser(prev => ({ ...prev, role: e.target.value as 'user' | 'admin' }))}
+                                                                    className="w-full bg-black/40 border border-white/10 text-white rounded-xl px-3 py-2 text-xs font-mono focus:outline-none"
+                                                                >
+                                                                    <option value="user" className="bg-[#000752]">User</option>
+                                                                    <option value="admin" className="bg-[#000752]">Admin</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div className="border-t border-white/5 pt-4">
+                                                                <label className="inline-flex items-center gap-3 cursor-pointer">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        checked={activeUser.gdprConsent}
+                                                                        onChange={(e) => updateActiveUser(prev => ({ ...prev, gdprConsent: e.target.checked }))}
+                                                                        className="w-4 h-4 rounded border-white/20 bg-black/40 text-[#000752]"
+                                                                    />
+                                                                    <span className="text-sm text-white/80">GDPR compliance mandatory</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <button
+                                                    type="submit"
+                                                    className="w-full bg-white hover:bg-white/95 text-[#000752] font-bold py-2.5 rounded-xl text-xs uppercase tracking-widest transition-all duration-300 shadow-lg mt-4"
                                                 >
-                                                    <option value="user" className="bg-[#000752]">User</option>
-                                                    <option value="admin" className="bg-[#000752]">Admin</option>
-                                                </select>
+                                                    Commit Records
+                                                </button>
+                                            </form>
+                                        ) : (
+                                            <div className="flex flex-col md:flex-row gap-8 font-light">
+                                                <div className="flex-1 space-y-5">
+                                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                        <div>
+                                                            <h4 className="text-xs uppercase tracking-widest text-white/40 font-bold mb-1">First Name</h4>
+                                                            <p className="text-lg text-white font-medium">{activeUser.firstname}</p>
+                                                        </div>
+                                                        <div>
+                                                            <h4 className="text-xs uppercase tracking-widest text-white/40 font-bold mb-1">Last Name</h4>
+                                                            <p className="text-lg text-white font-medium">{activeUser.lastname}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="w-full md:w-80 border-l border-white/5 md:pl-8 space-y-5">
+                                                    <div>
+                                                        <h4 className="text-xs uppercase tracking-widest text-white/40 font-bold mb-1">Access Privilege</h4>
+                                                        <p className="text-sm font-semibold font-mono text-white uppercase">
+                                                            🛡️ {activeUser.role} Category
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="text-xs uppercase tracking-widest text-white/40 font-bold mb-1">GDPR Agreement Status</h4>
+                                                        <p className={`text-sm font-semibold ${activeUser.gdprConsent ? 'text-emerald-400' : 'text-amber-400'}`}>
+                                                            {activeUser.gdprConsent ? '✓ Authorized' : '𐄂 Pending Acceptance'}
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
-
-                                            <div className="border-t border-white/5 pt-4">
-                                                <label className="inline-flex items-center gap-3 cursor-pointer">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={activeUser.gdprConsent}
-                                                        onChange={(e) => updateActiveUser(prev => ({ ...prev, gdprConsent: e.target.checked }))}
-                                                        className="w-4 h-4 rounded border-white/20 bg-black/40 text-[#000752]"
-                                                    />
-                                                    <span className="text-sm text-white/80">GDPR compliance mandatory</span>
-                                                </label>
-                                            </div>
-                                        </div>
+                                        )}
                                     </div>
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    className="w-full bg-white hover:bg-white/95 text-[#000752] font-bold py-2.5 rounded-xl text-xs uppercase tracking-widest transition-all duration-300 shadow-lg mt-4"
-                                >
-                                    Commit Records
-                                </button>
-                            </form>
-                        ) : (
-                            // View Profile State
-                            <div className="flex flex-col md:flex-row gap-8 font-light">
-                                <div className="flex-1 space-y-5">
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div>
-                                            <h4 className="text-xs uppercase tracking-widest text-white/40 font-bold mb-1">First Name</h4>
-                                            <p className="text-lg text-white font-medium">{activeUser.firstname}</p>
-                                        </div>
-                                        <div>
-                                            <h4 className="text-xs uppercase tracking-widest text-white/40 font-bold mb-1">Last Name</h4>
-                                            <p className="text-lg text-white font-medium">{activeUser.lastname}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="w-full md:w-80 border-l border-white/5 md:pl-8 space-y-5">
-                                    <div>
-                                        <h4 className="text-xs uppercase tracking-widest text-white/40 font-bold mb-1">Access Privilege</h4>
-                                        <p className="text-sm font-semibold font-mono text-white uppercase">
-                                            🛡️ {activeUser.role} Category
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <h4 className="text-xs uppercase tracking-widest text-white/40 font-bold mb-1">GDPR Agreement Status</h4>
-                                        <p className={`text-sm font-semibold ${activeUser.gdprConsent ? 'text-emerald-400' : 'text-amber-400'}`}>
-                                            {activeUser.gdprConsent ? '✓ Authorized' : '𐄂 Pending Acceptance'}
-                                        </p>
-                                    </div>
-                                </div>
+                                )}
                             </div>
-                        )}
-                    </div>
+                        )
+                    })}
                 </div>
             ) : (
                 <div style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 0%, rgba(217, 217, 217, 0) 100%)' }} className="border border-white/10 rounded-[2rem] p-12 text-center text-white/60 font-mono">
@@ -392,7 +406,7 @@ export default function UserLandingPage() {
                 <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/60 backdrop-blur-md">
                     <div className="bg-[#000752] border border-white/20 p-8 rounded-[2rem] w-full max-w-md shadow-2xl mx-4 animate-fade-in font-mono">
                         <h2 className="text-2xl font-bold text-white mb-2">Create New {activeTab === 'admin' ? 'Admin' : 'User'}</h2>
-                        <p className="text-xs text-white/50 mb-6">Will be added directly into the <span className="text-white font-bold uppercase">{activeTab}</span> category.</p>
+                        <p className="text-xs text-white/50 mb-6">Will be added directly into the <span className="text-white font-bold uppercase">{activeTab}</span> category list.</p>
 
                         <form onSubmit={handleAddUser} className="space-y-4">
                             <div>

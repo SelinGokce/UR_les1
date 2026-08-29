@@ -22,24 +22,25 @@ export default function ProjectPage() {
 
   return (
     <div className="relative min-h-screen">
-      {/* Outer wrapper applies the global layout and fade-in animation */}
-      <div className="flex gap-12 items-start max-w-6xl mx-auto pt-10 pb-20 fade-in-up">
+      {/* Outer wrapper: switches from vertical stacking on mobile to side-by-side on desktop */}
+      <div className="flex flex-col md:flex-row gap-6 md:gap-12 items-start max-w-6xl mx-auto pt-4 sm:pt-10 pb-12 sm:pb-20 px-3 sm:px-4 fade-in-up">
 
-        {/* Left Side: Sidebar Icon Container */}
-        <div className="flex flex-col items-center gap-3 mt-10">
-          <div className="p-5 rounded-2xl">
+        {/* Left Side: Sidebar Icon Container (Aligned Left) */}
+        <div className="flex flex-row md:flex-col items-center md:items-start gap-3 mt-2 md:mt-10 self-start">
+          <div className="p-2 sm:p-5 rounded-2xl">
             <Image
               src="/disk.svg"
               alt="Installation Design Icon"
               width={55}
               height={55}
+              className="w-10 h-10 sm:w-[55px] sm:h-[55px] object-contain"
             />
           </div>
-          <span className="text-white text-2xl font-bold tracking-tight">Project</span>
+          <span className="text-white text-xl sm:text-2xl font-bold tracking-tight text-left">Project</span>
         </div>
 
-        {/* Right Side: Render our structural components */}
-        <div className="flex-1 space-y-12">
+        {/* Right Side: Render structural components */}
+        <div className="w-full flex-1 space-y-8 sm:space-y-12">
 
           {/* 1. Details Section */}
           <section className="opacity-0 [animation-delay:200ms] animate-[fadeInUp_0.8s_ease-out_forwards]">

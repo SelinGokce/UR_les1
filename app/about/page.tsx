@@ -21,25 +21,26 @@ export default function AboutPage() {
   const tools = toolsInput.split(',').filter((t) => t.trim().length > 0)
 
   return (
-    <div className="flex gap-12 items-start max-w-6xl mx-auto pt-10 pb-20 fade-in-up">
+    <div className="flex flex-col md:flex-row gap-6 md:gap-12 items-start max-w-6xl mx-auto pt-4 sm:pt-10 pb-12 sm:pb-20 px-3 sm:px-4 fade-in-up">
 
-      {/* Left Side: Sidebar Icon */}
-      <div className="flex flex-col items-center gap-3 mt-10 opacity-0 [animation-delay:100ms] animate-[fadeInUp_0.8s_ease-out_forwards]">
-        <div className="p-5 rounded-2xl">
+      {/* Left Side: Sidebar Icon & Label (Aligned Left) */}
+      <div className="flex flex-row md:flex-col items-center md:items-start gap-3 mt-2 md:mt-10 opacity-0 [animation-delay:100ms] animate-[fadeInUp_0.8s_ease-out_forwards] self-start">
+        <div className="p-2 sm:p-5 rounded-2xl">
           <Image
             src="/userbadge.svg"
             alt="User badge Icon"
             width={55}
             height={55}
+            className="w-10 h-10 sm:w-[55px] sm:h-[55px] object-contain"
           />
         </div>
-        <span className="text-white text-2xl font-bold tracking-tight">About</span>
+        <span className="text-white text-xl sm:text-2xl font-bold tracking-tight text-left">About</span>
       </div>
 
       {/* Right Side: Content Card */}
-      <div className="flex-1 opacity-0 [animation-delay:300ms] animate-[fadeInUp_0.8s_ease-out_forwards]">
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex-1">
+      <div className="w-full flex-1 opacity-0 [animation-delay:300ms] animate-[fadeInUp_0.8s_ease-out_forwards]">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4">
+          <div className="flex-1 w-full">
             <ProjectHeader title="Personal Profile" />
           </div>
 
@@ -47,7 +48,7 @@ export default function AboutPage() {
           {(currentRole === 'user' || currentRole === 'admin') && (
             <button
               onClick={() => setIsEditing(!isEditing)}
-              className="ml-4 bg-white/10 hover:bg-white hover:text-[#000752] text-white border border-white/20 font-mono font-bold py-2.5 px-6 rounded-full transition-all duration-300 backdrop-blur-md text-sm shadow-lg whitespace-nowrap"
+              className="w-full sm:w-auto bg-white/10 hover:bg-white hover:text-[#000752] text-white border border-white/20 font-mono font-bold py-2 sm:py-2.5 px-5 sm:px-6 rounded-full transition-all duration-300 backdrop-blur-md text-xs sm:text-sm shadow-lg whitespace-nowrap"
             >
               {isEditing ? '✓ Done Editing' : '✏️ Edit Profile'}
             </button>
@@ -56,85 +57,85 @@ export default function AboutPage() {
 
         <div
           style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 100%)' }}
-          className="border border-white/20 rounded-[2rem] overflow-hidden p-10 backdrop-blur-sm shadow-xl"
+          className="border border-white/20 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden p-5 sm:p-10 backdrop-blur-sm shadow-xl"
         >
           {isEditing ? (
             /* EDIT FORM VIEW */
-            <div className="space-y-6 font-mono">
+            <div className="space-y-4 sm:space-y-6 font-mono">
               <div>
-                <label className="block text-xs uppercase tracking-wider text-white/60 mb-2">Display Name</label>
+                <label className="block text-[10px] sm:text-xs uppercase tracking-wider text-white/60 mb-1.5 sm:mb-2 ml-1">Display Name</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-white font-sans text-xl font-bold focus:outline-none focus:border-white/50"
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-3.5 sm:px-4 py-2 sm:py-2.5 text-white font-sans text-lg sm:text-xl font-bold focus:outline-none focus:border-white/50"
                 />
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-wider text-white/60 mb-2">Education & Focus</label>
+                <label className="block text-[10px] sm:text-xs uppercase tracking-wider text-white/60 mb-1.5 sm:mb-2 ml-1">Education & Focus</label>
                 <textarea
-                  rows={3}
+                  rows={4}
                   value={education}
                   onChange={(e) => setEducation(e.target.value)}
-                  className="w-full bg-white/10 border border-white/20 rounded-xl p-4 text-white font-sans text-sm focus:outline-none focus:border-white/50"
+                  className="w-full bg-white/10 border border-white/20 rounded-xl p-3 sm:p-4 text-white font-sans text-xs sm:text-sm focus:outline-none focus:border-white/50 leading-relaxed"
                 />
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-wider text-white/60 mb-2">Design Philosophy</label>
+                <label className="block text-[10px] sm:text-xs uppercase tracking-wider text-white/60 mb-1.5 sm:mb-2 ml-1">Design Philosophy</label>
                 <textarea
-                  rows={3}
+                  rows={4}
                   value={philosophy}
                   onChange={(e) => setPhilosophy(e.target.value)}
-                  className="w-full bg-white/10 border border-white/20 rounded-xl p-4 text-white font-sans text-sm focus:outline-none focus:border-white/50"
+                  className="w-full bg-white/10 border border-white/20 rounded-xl p-3 sm:p-4 text-white font-sans text-xs sm:text-sm focus:outline-none focus:border-white/50 leading-relaxed"
                 />
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-wider text-white/60 mb-2">
+                <label className="block text-[10px] sm:text-xs uppercase tracking-wider text-white/60 mb-1.5 sm:mb-2 ml-1">
                   Expertise Tags (Comma-separated)
                 </label>
                 <input
                   type="text"
                   value={toolsInput}
                   onChange={(e) => setToolsInput(e.target.value)}
-                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-white font-sans text-sm focus:outline-none focus:border-white/50"
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-3.5 sm:px-4 py-2 sm:py-2.5 text-white font-sans text-xs sm:text-sm focus:outline-none focus:border-white/50"
                 />
               </div>
             </div>
           ) : (
             /* DISPLAY VIEW */
             <>
-              <h1 className="text-2xl font-bold text-white mb-6">
+              <h1 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">
                 Hello, I'm <span className="text-white drop-shadow-md">{name}</span>
               </h1>
 
-              <div className="space-y-8">
+              <div className="space-y-6 sm:space-y-8">
                 {/* Academic Background */}
                 <div>
-                  <h3 className="text-sm uppercase tracking-widest text-white/60 font-bold mb-2">Education & Focus</h3>
-                  <p className="text-l text-white leading-relaxed font-light">
+                  <h3 className="text-xs sm:text-sm uppercase tracking-widest text-white/60 font-bold mb-1.5 sm:mb-2 ml-0.5">Education & Focus</h3>
+                  <p className="text-sm sm:text-base text-white leading-relaxed font-light">
                     {education}
                   </p>
                 </div>
 
                 {/* Combined UI Interests */}
                 <div>
-                  <h3 className="text-sm uppercase tracking-widest text-white/60 font-bold mb-2">Design Philosophy</h3>
-                  <p className="text-l text-white leading-relaxed font-light">
+                  <h3 className="text-xs sm:text-sm uppercase tracking-widest text-white/60 font-bold mb-1.5 sm:mb-2 ml-0.5">Design Philosophy</h3>
+                  <p className="text-sm sm:text-base text-white leading-relaxed font-light">
                     {philosophy}
                   </p>
                 </div>
 
                 {/* Expertise Tags */}
                 <div>
-                  <h3 className="text-sm uppercase tracking-widest text-white/60 font-bold mb-2">Expertise</h3>
-                  <div className="flex flex-wrap gap-2 mt-3">
+                  <h3 className="text-xs sm:text-sm uppercase tracking-widest text-white/60 font-bold mb-1.5 sm:mb-2 ml-0.5">Expertise</h3>
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2 sm:mt-3">
                     {tools.map((tool, index) => (
                       <span
                         key={index}
-                        className="bg-white/10 border border-white/20 px-4 py-1.5 rounded-full text-sm text-white font-medium backdrop-blur-sm"
+                        className="bg-white/10 border border-white/20 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm text-white font-medium backdrop-blur-sm"
                       >
                         {tool.trim()}
                       </span>
