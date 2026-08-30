@@ -19,20 +19,19 @@ export default function GlobalNavbar() {
     setIsOpen(false)
   }, [pathname])
 
-  const navLinks = [
+  const standardLinks = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Projects', href: '/projects' },
     { name: 'Contact', href: '/contact' },
   ]
 
-  if (currentRole === 'admin') {
-    navLinks.push(
-      { name: 'Configuration core', href: '/admin-configuration' },
-      { name: 'Profile Registry', href: '/admin-profile-registry' }
-    )
-  }
+  const adminLinks = [
+    { name: 'Configuration core', href: '/admin-configuration' },
+    { name: 'Profile Registry', href: '/admin-profile-registry' },
+  ]
 
+  const navLinks = currentRole === 'admin' ? [...standardLinks, ...adminLinks] : standardLinks
   const isAdminMode = currentRole === 'admin'
 
   return (
@@ -79,34 +78,31 @@ export default function GlobalNavbar() {
           )}
         </div>
 
-        {/* Center: Clock Module */}
-        <div className="absolute left-1/2 -translate-x-1/2">
+        {/* Clock Wrapper */}
+        <div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 flex items-center">
           <Clock />
         </div>
 
-        {/* Right Side: Symmetrical Hamburger / Close Button */}
-        <div className="flex items-center">
+        {/* Right Side: Hamburger Toggle Button */}
+        <div className="flex items-center md:hidden">
           {!isHome && (
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden relative flex items-center justify-center w-10 h-10 rounded-full bg-[#354982]/80 border border-white/40 text-white backdrop-blur-md shadow-lg focus:outline-none"
+              className={`relative flex items-center justify-center w-10 h-10 rounded-full border text-white backdrop-blur-md shadow-lg focus:outline-none transition-colors duration-300 ${isAdminMode
+                  ? 'bg-[#52002b]/80 border-white/40'
+                  : 'bg-[#354982]/80 border-white/40'
+                }`}
               aria-label="Toggle navigation menu"
             >
               <div className="w-5 h-4 relative flex flex-col justify-between items-center">
-                {/* Top line */}
                 <span
-                  className={`w-5 h-0.5 bg-white rounded-full transition-all duration-300 absolute ${isOpen ? 'top-1.5 rotate-45' : 'top-0'
-                    }`}
+                  className={`w-5 h-0.5 bg-white rounded-full transition-all duration-300 absolute ${isOpen ? 'top-1.5 rotate-45' : 'top-0'}`}
                 />
-                {/* Middle line */}
                 <span
-                  className={`w-5 h-0.5 bg-white rounded-full transition-all duration-300 absolute top-1.5 ${isOpen ? 'opacity-0 scale-0' : 'opacity-100'
-                    }`}
+                  className={`w-5 h-0.5 bg-white rounded-full transition-all duration-300 absolute top-1.5 ${isOpen ? 'opacity-0 scale-0' : 'opacity-100'}`}
                 />
-                {/* Bottom line */}
                 <span
-                  className={`w-5 h-0.5 bg-white rounded-full transition-all duration-300 absolute ${isOpen ? 'top-1.5 -rotate-45' : 'bottom-0'
-                    }`}
+                  className={`w-5 h-0.5 bg-white rounded-full transition-all duration-300 absolute ${isOpen ? 'top-1.5 -rotate-45' : 'bottom-0'}`}
                 />
               </div>
             </button>
@@ -114,30 +110,81 @@ export default function GlobalNavbar() {
         </div>
       </nav>
 
-      {/* Mobile Vertical Drawer Overlay */}
+      {/* Mobile Drawer Overlay */}
       {!isHome && isOpen && (
-        <div className="fixed inset-0 z-40 md:hidden bg-black/60 backdrop-blur-md pt-24 px-6 pb-10 flex flex-col justify-start animate-fade-in">
-          <div className="flex flex-col gap-3">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`w-full text-center py-3.5 px-6 rounded-2xl border text-sm font-medium transition-all duration-300 ${isActive
-                    ? isAdminMode
-                      ? "bg-white text-[#52002b] border-white font-bold shadow-lg"
-                      : "bg-white text-[#354982] border-white font-bold shadow-lg"
-                    : isAdminMode
-                      ? "bg-[#52002b]/90 border-white/30 text-slate-100"
-                      : "bg-[#354982]/90 border-white/40 text-slate-100"
-                    }`}
-                >
-                  {link.name}
-                </Link>
-              )
-            })}
+        <div className="fixed inset-0 z-40 md:hidden bg-black/40 backdrop-blur-md pt-20 px-4 pb-8 flex flex-col justify-start items-center animate-fade-in overflow-y-auto">
+
+          {/* Main Mobile Card */}
+          <div
+            style={{
+              background: isAdminMode
+                ? 'linear-gradient(135deg, rgba(82, 0, 43, 0.75) 0%, rgba(35, 0, 18, 0.5) 100%)'
+                : 'linear-gradient(135deg, rgba(53, 73, 130, 0.7) 0%, rgba(0, 7, 82, 0.4) 100%)'
+            }}
+            className={`w-full max-w-[340px] border rounded-[2rem] p-6 backdrop-blur-md transition-all duration-500 flex flex-col gap-6 mt-2 relative overflow-hidden ${isAdminMode
+                ? 'border-pink-300/40 shadow-[0_0_30px_rgba(82,0,43,0.6)]'
+                : 'border-cyan-200/40 shadow-[0_0_30px_rgba(53,73,130,0.5)]'
+              }`}
+          >
+            {/* Soft Ambient Light Glow */}
+            <div className={`absolute -top-12 -right-12 w-32 h-32 rounded-full blur-2xl pointer-events-none transition-colors duration-500 ${isAdminMode ? 'bg-pink-500/25' : 'bg-cyan-400/20'
+              }`} />
+
+            {/* Standard Menu Section */}
+            <div className="flex flex-col gap-3 relative z-10">
+              <div className={`text-xs font-mono tracking-widest border-b border-white/20 pb-1.5 mb-1 ${isAdminMode ? 'text-pink-100/90' : 'text-cyan-100/90'
+                }`}>
+                Menu
+              </div>
+              {standardLinks.map((link) => {
+                const isActive = pathname === link.href
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`flex items-center justify-start w-full py-2.5 px-6 rounded-full border shadow-lg backdrop-blur-md transition-all duration-300 ${isActive
+                        ? isAdminMode
+                          ? "bg-white text-[#52002b] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                          : "bg-white text-[#354982] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                        : "bg-gradient-to-b from-white/25 to-white/10 border-white/35 text-white hover:bg-white/30 hover:border-white/50"
+                      }`}
+                  >
+                    <span className="text-xs font-medium tracking-wide drop-shadow-sm">
+                      {link.name}
+                    </span>
+                  </Link>
+                )
+              })}
+            </div>
+
+            {/* Admin Section */}
+            {currentRole === 'admin' && (
+              <div className="flex flex-col gap-3 relative z-10">
+                <div className="text-pink-200/90 text-xs font-mono tracking-widest border-b border-white/20 pb-1.5 mb-1">
+                  Admin
+                </div>
+                {adminLinks.map((link) => {
+                  const isActive = pathname === link.href
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`flex items-center justify-start w-full py-2.5 px-6 rounded-full border shadow-lg backdrop-blur-md transition-all duration-300 ${isActive
+                          ? "bg-white text-[#52002b] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                          : "bg-gradient-to-b from-white/25 to-white/10 border-white/35 text-white hover:bg-white/30 hover:border-white/50"
+                        }`}
+                    >
+                      <span className="text-xs font-medium tracking-wide drop-shadow-sm">
+                        {link.name}
+                      </span>
+                    </Link>
+                  )
+                })}
+              </div>
+            )}
+
           </div>
         </div>
       )}

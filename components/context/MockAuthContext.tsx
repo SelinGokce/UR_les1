@@ -15,6 +15,8 @@ interface AuthContextType {
     currentRole: UserRole
     switchRole: (role: UserRole) => void
     logout: () => void
+    isSimOpen: boolean
+    toggleSim: () => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -22,6 +24,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function MockAuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<UserProfile | null>(null)
     const [currentRole, setCurrentRole] = useState<UserRole>('guest')
+    const [isSimOpen, setIsSimOpen] = useState(false)
 
     const switchRole = (role: UserRole) => {
         setCurrentRole(role)
@@ -35,9 +38,10 @@ export function MockAuthProvider({ children }: { children: ReactNode }) {
     }
 
     const logout = () => switchRole('guest')
+    const toggleSim = () => setIsSimOpen((prev) => !prev)
 
     return (
-        <AuthContext.Provider value={{ user, currentRole, switchRole, logout }}>
+        <AuthContext.Provider value={{ user, currentRole, switchRole, logout, isSimOpen, toggleSim }}>
             {children}
         </AuthContext.Provider>
     )

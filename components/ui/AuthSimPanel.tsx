@@ -1,26 +1,25 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useAuth, UserRole } from "../context/MockAuthContext"
 
 export default function AuthSimPanel() {
-    const { currentRole, switchRole, user } = useAuth()
-    const [isVisible, setIsVisible] = useState(false)
+    const { currentRole, switchRole, user, isSimOpen, toggleSim } = useAuth()
 
     // Easter Egg: Press Ctrl + Shift + A to toggle the Auth Simulator
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
                 e.preventDefault()
-                setIsVisible((prev) => !prev)
+                toggleSim()
             }
         }
 
         window.addEventListener('keydown', handleKeyDown)
         return () => window.removeEventListener('keydown', handleKeyDown)
-    }, [])
+    }, [toggleSim])
 
-    if (!isVisible) return null
+    if (!isSimOpen) return null
 
     const roles: UserRole[] = ['guest', 'user', 'admin']
 
@@ -29,7 +28,7 @@ export default function AuthSimPanel() {
             <div className="flex items-center justify-between text-xs uppercase tracking-wider text-white/40 font-bold mb-3">
                 <span>🛠️ Auth Simulator</span>
                 <button
-                    onClick={() => setIsVisible(false)}
+                    onClick={toggleSim}
                     className="text-white/40 hover:text-white text-xs px-1"
                 >
                     ✕
