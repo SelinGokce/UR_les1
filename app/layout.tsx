@@ -21,7 +21,8 @@ function LayoutThemeContent({ children }: { children: React.ReactNode }) {
       <GoogleAnalyticsTracker />
       <GlobalNavbar />
 
-      <main className="flex-grow p-20 mx-auto mt-10 w-full max-w-7xl">
+      {/* FIXED: Responsive padding instead of rigid p-20 */}
+      <main className="flex-grow px-3 py-6 sm:px-8 sm:py-12 md:p-20 mx-auto mt-4 sm:mt-10 w-full max-w-7xl overflow-hidden sm:overflow-visible">
         {children}
       </main>
 
