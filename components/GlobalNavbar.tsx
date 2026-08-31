@@ -12,8 +12,6 @@ export default function GlobalNavbar() {
   const { currentRole } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
 
-  const isHome = pathname === '/'
-
   // Auto-close menu when changing routes
   useEffect(() => {
     setIsOpen(false)
@@ -53,29 +51,27 @@ export default function GlobalNavbar() {
           </div>
 
           {/* Desktop Navigation Links */}
-          {!isHome && (
-            <div className="hidden md:flex flex-row gap-3 text-slate-200">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`nav-pill px-4 py-2 rounded-[16px] border transition-all duration-300 backdrop-blur-sm ${isActive
-                      ? isAdminMode
-                        ? "bg-white text-[#52002b] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
-                        : "bg-white text-[#354982] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
-                      : isAdminMode
-                        ? "bg-[#52002b]/80 border-white/30 text-slate-200"
-                        : "bg-[#354982]/80 border-white/50 text-slate-200"
-                      } ${isAdminMode ? 'is-admin' : ''}`}
-                  >
-                    {link.name}
-                  </Link>
-                )
-              })}
-            </div>
-          )}
+          <div className="hidden md:flex flex-row gap-3 text-slate-200">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`nav-pill px-4 py-2 rounded-[16px] border transition-all duration-300 backdrop-blur-sm ${isActive
+                    ? isAdminMode
+                      ? "bg-white text-[#52002b] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                      : "bg-white text-[#354982] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                    : isAdminMode
+                      ? "bg-[#52002b]/80 border-white/30 text-slate-200"
+                      : "bg-[#354982]/80 border-white/50 text-slate-200"
+                    } ${isAdminMode ? 'is-admin' : ''}`}
+                >
+                  {link.name}
+                </Link>
+              )
+            })}
+          </div>
         </div>
 
         {/* Clock Wrapper */}
@@ -85,33 +81,31 @@ export default function GlobalNavbar() {
 
         {/* Right Side: Hamburger Toggle Button */}
         <div className="flex items-center md:hidden">
-          {!isHome && (
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className={`relative flex items-center justify-center w-10 h-10 rounded-full border text-white backdrop-blur-md shadow-lg focus:outline-none transition-colors duration-300 ${isAdminMode
-                  ? 'bg-[#52002b]/80 border-white/40'
-                  : 'bg-[#354982]/80 border-white/40'
-                }`}
-              aria-label="Toggle navigation menu"
-            >
-              <div className="w-5 h-4 relative flex flex-col justify-between items-center">
-                <span
-                  className={`w-5 h-0.5 bg-white rounded-full transition-all duration-300 absolute ${isOpen ? 'top-1.5 rotate-45' : 'top-0'}`}
-                />
-                <span
-                  className={`w-5 h-0.5 bg-white rounded-full transition-all duration-300 absolute top-1.5 ${isOpen ? 'opacity-0 scale-0' : 'opacity-100'}`}
-                />
-                <span
-                  className={`w-5 h-0.5 bg-white rounded-full transition-all duration-300 absolute ${isOpen ? 'top-1.5 -rotate-45' : 'bottom-0'}`}
-                />
-              </div>
-            </button>
-          )}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className={`relative flex items-center justify-center w-10 h-10 rounded-full border text-white backdrop-blur-md shadow-lg focus:outline-none transition-colors duration-300 ${isAdminMode
+              ? 'bg-[#52002b]/80 border-white/40'
+              : 'bg-[#354982]/80 border-white/40'
+              }`}
+            aria-label="Toggle navigation menu"
+          >
+            <div className="w-5 h-4 relative flex flex-col justify-between items-center">
+              <span
+                className={`w-5 h-0.5 bg-white rounded-full transition-all duration-300 absolute ${isOpen ? 'top-1.5 rotate-45' : 'top-0'}`}
+              />
+              <span
+                className={`w-5 h-0.5 bg-white rounded-full transition-all duration-300 absolute top-1.5 ${isOpen ? 'opacity-0 scale-0' : 'opacity-100'}`}
+              />
+              <span
+                className={`w-5 h-0.5 bg-white rounded-full transition-all duration-300 absolute ${isOpen ? 'top-1.5 -rotate-45' : 'bottom-0'}`}
+              />
+            </div>
+          </button>
         </div>
       </nav>
 
       {/* Mobile Drawer Overlay */}
-      {!isHome && isOpen && (
+      {isOpen && (
         <div className="fixed inset-0 z-40 md:hidden bg-black/40 backdrop-blur-md pt-20 px-4 pb-8 flex flex-col justify-start items-center animate-fade-in overflow-y-auto">
 
           {/* Main Mobile Card */}
@@ -122,8 +116,8 @@ export default function GlobalNavbar() {
                 : 'linear-gradient(135deg, rgba(53, 73, 130, 0.7) 0%, rgba(0, 7, 82, 0.4) 100%)'
             }}
             className={`w-full max-w-[340px] border rounded-[2rem] p-6 backdrop-blur-md transition-all duration-500 flex flex-col gap-6 mt-2 relative overflow-hidden ${isAdminMode
-                ? 'border-pink-300/40 shadow-[0_0_30px_rgba(82,0,43,0.6)]'
-                : 'border-cyan-200/40 shadow-[0_0_30px_rgba(53,73,130,0.5)]'
+              ? 'border-pink-300/40 shadow-[0_0_30px_rgba(82,0,43,0.6)]'
+              : 'border-cyan-200/40 shadow-[0_0_30px_rgba(53,73,130,0.5)]'
               }`}
           >
             {/* Soft Ambient Light Glow */}
@@ -144,10 +138,10 @@ export default function GlobalNavbar() {
                     href={link.href}
                     onClick={() => setIsOpen(false)}
                     className={`flex items-center justify-start w-full py-2.5 px-6 rounded-full border shadow-lg backdrop-blur-md transition-all duration-300 ${isActive
-                        ? isAdminMode
-                          ? "bg-white text-[#52002b] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
-                          : "bg-white text-[#354982] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
-                        : "bg-gradient-to-b from-white/25 to-white/10 border-white/35 text-white hover:bg-white/30 hover:border-white/50"
+                      ? isAdminMode
+                        ? "bg-white text-[#52002b] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                        : "bg-white text-[#354982] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                      : "bg-gradient-to-b from-white/25 to-white/10 border-white/35 text-white hover:bg-white/30 hover:border-white/50"
                       }`}
                   >
                     <span className="text-xs font-medium tracking-wide drop-shadow-sm">
@@ -172,8 +166,8 @@ export default function GlobalNavbar() {
                       href={link.href}
                       onClick={() => setIsOpen(false)}
                       className={`flex items-center justify-start w-full py-2.5 px-6 rounded-full border shadow-lg backdrop-blur-md transition-all duration-300 ${isActive
-                          ? "bg-white text-[#52002b] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
-                          : "bg-gradient-to-b from-white/25 to-white/10 border-white/35 text-white hover:bg-white/30 hover:border-white/50"
+                        ? "bg-white text-[#52002b] border-white font-bold shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+                        : "bg-gradient-to-b from-white/25 to-white/10 border-white/35 text-white hover:bg-white/30 hover:border-white/50"
                         }`}
                     >
                       <span className="text-xs font-medium tracking-wide drop-shadow-sm">
