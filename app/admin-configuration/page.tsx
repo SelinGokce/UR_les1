@@ -1,12 +1,19 @@
 "use client"
 
 import { useState } from 'react'
+import Image from 'next/image'
 import ProjectHeader from '@/components/ui/ProjectHeader'
+
+interface ProjectImageData {
+    src: string
+    alt: string
+}
 
 interface ProjectData {
     title: string
     description: string
     tools: string
+    images: ProjectImageData[]
 }
 
 interface ProjectSectionProps {
@@ -16,7 +23,7 @@ interface ProjectSectionProps {
     isEditing: boolean
     errors: { title?: string; description?: string; tools?: string }
     onEdit: (key: 'beatbliss' | 'birdseye' | 'consequences' | null) => void
-    onFieldChange: (project: 'beatbliss' | 'birdseye' | 'consequences', field: string, value: string) => void
+    onFieldChange: (project: 'beatbliss' | 'birdseye' | 'consequences', field: string, value: any) => void
     onSave: (project: 'beatbliss' | 'birdseye' | 'consequences') => void
 }
 
@@ -30,6 +37,22 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
     onFieldChange,
     onSave
 }) => {
+    const handleImageChange = (index: number, field: keyof ProjectImageData, value: string) => {
+        const updatedImages = [...data.images]
+        updatedImages[index][field] = value
+        onFieldChange(projectKey, 'images', updatedImages)
+    }
+
+    const handleAddImage = () => {
+        const updatedImages = [...data.images, { src: '/placeholder.png', alt: 'New Project Visual' }]
+        onFieldChange(projectKey, 'images', updatedImages)
+    }
+
+    const handleRemoveImage = (index: number) => {
+        const updatedImages = data.images.filter((_, i) => i !== index)
+        onFieldChange(projectKey, 'images', updatedImages)
+    }
+
     return (
         <div
             style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(217, 217, 217, 0) 100%)' }}
@@ -39,7 +62,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
                 <h2 className="text-2xl font-bold text-white tracking-tight">{projectName}</h2>
                 <button
                     onClick={() => onEdit(isEditing ? null : projectKey)}
-                    className="bg-white/10 hover:bg-white hover:text-[#000752] text-white border border-white/20 font-bold py-2 px-5 rounded-full transition-all duration-300 text-xs uppercase tracking-wider backdrop-blur-sm"
+                    className="bg-white/10 hover:bg-white hover:text-[#000752] text-white border border-white/20 font-bold py-2 px-5 rounded-full transition-all duration-300 text-xs uppercase tracking-wider backdrop-blur-sm cursor-pointer"
                 >
                     {isEditing ? 'Cancel' : '✏️ Modify Fields'}
                 </button>
@@ -83,9 +106,53 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
                         {errors.tools && <p className="text-red-400 text-xs mt-1 ml-1 font-sans">⚠️ {errors.tools}</p>}
                     </div>
 
+                    {/* Image Assets Editor */}
+                    <div>
+                        <label className="block text-xs uppercase tracking-widest text-white/60 font-bold mb-2 ml-1">Project Images</label>
+                        <div className="space-y-3">
+                            {data.images.map((img, idx) => (
+                                <div key={idx} className="flex flex-col sm:flex-row items-center gap-3 bg-black/30 p-3 rounded-xl border border-white/10">
+                                    <div className="relative w-14 h-14 shrink-0 rounded-lg overflow-hidden border border-white/20 bg-black/40">
+                                        <Image src={img.src} alt={img.alt} fill className="object-cover" />
+                                    </div>
+                                    <div className="flex-1 w-full space-y-2 font-mono">
+                                        <input
+                                            type="text"
+                                            value={img.src}
+                                            onChange={(e) => handleImageChange(idx, 'src', e.target.value)}
+                                            placeholder="Image Path"
+                                            className="w-full bg-black/40 border border-white/20 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none"
+                                        />
+                                        <input
+                                            type="text"
+                                            value={img.alt}
+                                            onChange={(e) => handleImageChange(idx, 'alt', e.target.value)}
+                                            placeholder="Alt Description"
+                                            className="w-full bg-black/40 border border-white/20 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none"
+                                        />
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleRemoveImage(idx)}
+                                        className="text-red-400 hover:text-red-300 text-xs px-2 py-1 rounded bg-red-500/10 hover:bg-red-500/20 cursor-pointer"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                        <button
+                            type="button"
+                            onClick={handleAddImage}
+                            className="w-full mt-3 py-2 border border-dashed border-white/30 rounded-xl text-xs text-white/80 hover:text-white hover:border-white/60 transition-all cursor-pointer font-mono"
+                        >
+                            + Add Image Slot
+                        </button>
+                    </div>
+
                     <button
                         type="submit"
-                        className="w-full bg-white hover:bg-white/95 text-[#000752] font-bold py-2.5 rounded-xl text-xs uppercase tracking-widest transition-all duration-300 shadow-lg"
+                        className="w-full bg-white hover:bg-white/95 text-[#000752] font-bold py-2.5 rounded-xl text-xs uppercase tracking-widest transition-all duration-300 shadow-lg cursor-pointer"
                     >
                         Commit Changes
                     </button>
@@ -113,6 +180,21 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
                             ))}
                         </div>
                     </div>
+
+                    {/* Read-Only Visual Gallery Preview */}
+                    <div>
+                        <h4 className="text-xs uppercase tracking-widest text-white/40 font-bold mb-2">Project Visuals ({data.images.length})</h4>
+                        <div className="flex flex-wrap gap-3">
+                            {data.images.map((img, idx) => (
+                                <div key={idx} className="group relative w-20 h-20 rounded-xl overflow-hidden border border-white/20 bg-black/30 shadow-md">
+                                    <Image src={img.src} alt={img.alt} fill className="object-cover" />
+                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity p-1 flex items-center justify-center">
+                                        <p className="text-[10px] text-white/90 text-center line-clamp-2 font-mono">{img.alt}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
@@ -124,18 +206,29 @@ export default function AdminPage() {
         beatbliss: {
             title: 'Beat Bliss',
             description: 'A vinyl album titled "Beat Bliss" by the fictional artist Evely Evelynn. I was given the opportunity to not only design a vinyl cover from scratch, but also to work with 3D models and Augmented Reality (AR) that is triggered when the cover is scanned.',
-            tools: 'Adobe Dimensions, Adobe Photoshop, Adobe Illustrator, Phone Photography'
+            tools: 'Adobe Dimensions, Adobe Photoshop, Adobe Illustrator, Phone Photography',
+            images: [
+                { src: '/beatbliss/mockupbeatbliss.png', alt: 'Vinyl Mockup' },
+                { src: '/beatbliss/album.jpeg', alt: 'Physical Album' },
+                { src: '/beatbliss/posterbb.png', alt: 'Promo Poster' },
+            ]
         },
         birdseye: {
             title: 'Birds-Eye',
             description: 'Birds-Eye is a nature journaling and photography application designed to help outdoor enthusiasts log their wildlife discoveries while guiding them to find diverse fauna and flora flourishing right in their local surroundings. This enables individuals to discover an immersive hobby and better connect with local ecosystems.',
-            tools: 'UI Design, Mockups, Prototyping'
+            tools: 'UI Design, Mockups, Prototyping',
+            images: [
+                { src: '/birdseye/mockupbirdseye.png', alt: 'Birds-Eye application user interface and mobile mockups' }
+            ]
         },
-        // SWAPPED: Redux Lantis completely rewritten into Consequences
         consequences: {
             title: 'Consequences',
             description: 'Consequences is an immersive live experience and physical thinkpiece designed to let users express and release deep inner emotions. Participants follow a structured sequence to intentionally shatter a physical plate inside a custom-engineered hexagonal mirror chamber, visualizing the sudden and raw impact of emotional release.',
-            tools: 'Interactive Design, Experiential Installation, Hardware Prototyping, Spatial Layout, Team Collaboration'
+            tools: 'Interactive Design, Experiential Installation, Hardware Prototyping, Spatial Layout, Team Collaboration',
+            images: [
+                { src: '/consequences/20250526_144731.jpg', alt: 'Physical interface setup with step-by-step instruction tokens' },
+                { src: '/consequences/20250526_141329.jpg', alt: 'Hexagonal infinite reflection mirror chamber installation with ambient floor LED paths' },
+            ]
         }
     })
     const [editingProject, setEditingProject] = useState<'beatbliss' | 'birdseye' | 'consequences' | null>(null)
@@ -165,7 +258,7 @@ export default function AdminPage() {
         return Object.keys(newErrors).length === 0
     }
 
-    const handleFieldChange = (project: 'beatbliss' | 'birdseye' | 'consequences', field: string, value: string) => {
+    const handleFieldChange = (project: 'beatbliss' | 'birdseye' | 'consequences', field: string, value: any) => {
         setProjects(prev => ({
             ...prev,
             [project]: { ...prev[project], [field]: value }
@@ -212,7 +305,6 @@ export default function AdminPage() {
                     onFieldChange={handleFieldChange}
                     onSave={handleSave}
                 />
-                {/* Renders your pristine structural installation configuration block */}
                 <ProjectSection
                     projectKey="consequences"
                     projectName="Consequences"
@@ -227,8 +319,8 @@ export default function AdminPage() {
                 {/* Floating Feedback Toasts */}
                 {feedback && (
                     <div className={`fixed bottom-24 left-10 z-[250] p-4 rounded-2xl border backdrop-blur-md shadow-2xl font-mono text-sm max-w-sm transition-all animate-[fadeInUp_0.3s_ease-out_forwards] ${feedback.type === 'success'
-                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-                        : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+                            ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+                            : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
                         }`}>
                         <div className="flex items-center gap-2.5">
                             <span>{feedback.type === 'success' ? '✅' : '🚨'}</span>
