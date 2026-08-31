@@ -32,7 +32,7 @@ export default function DirectMailSection({ emailList, canEdit, onUpdatePrimaryE
                 {canEdit && !isEditingEmail && (
                     <button
                         onClick={() => setIsEditingEmail(true)}
-                        className="text-xs font-mono text-white/70 hover:text-white underline"
+                        className="text-xs font-mono text-white/70 hover:text-white underline cursor-pointer"
                     >
                         Edit
                     </button>
@@ -70,7 +70,7 @@ export default function DirectMailSection({ emailList, canEdit, onUpdatePrimaryE
                         <a
                             key={idx}
                             href={`mailto:${item.email}`}
-                            className="flex items-center justify-start gap-3 sm:gap-4 w-full max-w-sm py-3 sm:py-3.5 px-5 sm:px-8 rounded-full bg-gradient-to-b from-white/25 to-white/10 border border-white/35 shadow-lg backdrop-blur-md hover:bg-white/30 hover:border-white/50 transition-all duration-300 group"
+                            className="flex items-center justify-start gap-3 sm:gap-4 w-full py-3 sm:py-3.5 px-5 sm:px-8 rounded-full bg-gradient-to-b from-white/25 to-white/10 border border-white/35 shadow-lg backdrop-blur-md hover:bg-white/30 hover:border-white/50 transition-all duration-300 group"
                         >
                             <div className="relative w-[18px] h-[18px] sm:w-[20px] sm:h-[20px] shrink-0">
                                 <Image
@@ -89,11 +89,11 @@ export default function DirectMailSection({ emailList, canEdit, onUpdatePrimaryE
                                 />
                             </div>
                             <div className="flex flex-col text-left overflow-hidden">
-                                <span className="text-white font-medium text-xs sm:text-sm md:text-base tracking-wide drop-shadow-sm truncate">
+                                <span className="text-white font-medium text-xs sm:text-sm md:text-base tracking-wide drop-shadow-md truncate">
                                     {item.email}
                                 </span>
                                 {item.label && (
-                                    <span className="text-[9px] sm:text-[10px] text-white/50 font-mono">{item.label}</span>
+                                    <span className="text-[10px] sm:text-[11px] text-white/80 font-mono drop-shadow-sm">{item.label}</span>
                                 )}
                             </div>
                         </a>

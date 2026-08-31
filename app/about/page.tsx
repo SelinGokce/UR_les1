@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from 'react'
-import Image from 'next/image'
 import ProjectHeader from '@/components/ui/ProjectHeader'
+import SidebarBadge from '@/components/ui/SidebarBadge'
 import { useAuth } from '@/components/context/MockAuthContext'
 
 export default function AboutPage() {
@@ -21,21 +21,10 @@ export default function AboutPage() {
   const tools = toolsInput.split(',').filter((t) => t.trim().length > 0)
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 md:gap-12 items-start w-full max-w-6xl mx-auto pt-2 sm:pt-10 pb-12 sm:pb-20 px-3 sm:px-4 fade-in-up">
+    <div className="flex flex-col md:flex-row gap-4 md:gap-12 items-start w-full max-w-6xl mx-auto pt-6 sm:pt-10 pb-12 sm:pb-20 px-3 sm:px-4 fade-in-up">
 
-      {/* Left Side: Sidebar Icon & Label (Aligned Left) */}
-      <div className="flex flex-row md:flex-col items-center md:items-start gap-2 sm:gap-3 mt-1 md:mt-10 opacity-0 [animation-delay:100ms] animate-[fadeInUp_0.8s_ease-out_forwards] self-start">
-        <div className="p-1.5 sm:p-5 rounded-2xl">
-          <Image
-            src="/userbadge.svg"
-            alt="User badge Icon"
-            width={55}
-            height={55}
-            className="w-8 h-8 sm:w-[55px] sm:h-[55px] object-contain"
-          />
-        </div>
-        <span className="text-white text-lg sm:text-2xl font-bold tracking-tight text-left">About</span>
-      </div>
+      {/* Left Side: Reusable Sidebar Badge */}
+      <SidebarBadge label="About" iconSrc="/userbadge.svg" />
 
       {/* Right Side: Content Card */}
       <div className="w-full flex-1 opacity-0 [animation-delay:300ms] animate-[fadeInUp_0.8s_ease-out_forwards]">
